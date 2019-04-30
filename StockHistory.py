@@ -110,5 +110,6 @@ def update_namads():
 
 if __name__ == "__main__":
     d = get_namad_history_by_name('جكانه806', start_date='1390-1-1', from_cache=True)["ClosePrice"]
+    pass
     # update_namads()
     # d = get_namad_history_by_id(46982154647719707, from_cache=True, start_date='1390-1-1')
