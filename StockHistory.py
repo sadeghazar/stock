@@ -8,6 +8,7 @@ from os import path
 
 from database import Database
 from model import TblHistory
+import jdatetime
 
 
 def get_namad_history_by_id(id, start_date=None, from_cache=False):
@@ -23,7 +24,8 @@ def get_namad_history_by_id(id, start_date=None, from_cache=False):
     df["GDATE"] = pd.DatetimeIndex(pd.to_datetime(df["Date"], format="%Y%m%d"))
     if start_date:
         try:
-            datetime_object = datetime.datetime.strptime(start_date, '%Y-%m-%d')
+            datetime_object = jdatetime.datetime.strptime(start_date, '%Y-%m-%d').togregorian()
+            # datetime_object = datetime.datetime.strptime(start_date, '%Y-%m-%d')
             mask = (df["GDATE"] >= datetime_object)
             df = df.loc[mask]
         except Exception as ex:
@@ -106,4 +108,4 @@ def update_namads():
 
 if __name__ == "__main__":
     # update_namads()
-    d = get_namad_history_by_id(46982154647719707, from_cache=True,start_date='2010-1-1')
+    d = get_namad_history_by_id(46982154647719707, from_cache=True, start_date='1390-1-1')
