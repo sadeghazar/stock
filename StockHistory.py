@@ -76,7 +76,8 @@ def update_namads():
             history = _get_namad_history_row_data(id)
             last_update = datetime.datetime.now()
 
-            h = TblHistory(namad_name=name, namad_id=id, history=history, last_update=last_update)
+            h = TblHistory(namad_name=name, namad_id=id,
+                           history=history, last_update=last_update,category=n[8])
             db.insert_or_update(h)
             print("-" * 100)
             print("{} of {}".format(couter, count))
