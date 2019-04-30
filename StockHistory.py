@@ -78,7 +78,10 @@ def update_namads():
 
             h = TblHistory(namad_name=name, namad_id=id, history=history, last_update=last_update)
             db.insert_or_update(h)
-            print("namad:{} > {} of {}".format(name , couter, count))
+            print("-" * 100)
+            print("{} of {}".format(couter, count))
+            print("{}".format(name))
+            print("-" * 100)
         except Exception as ex:
             print(n)
 
