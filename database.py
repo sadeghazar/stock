@@ -17,6 +17,7 @@ class Database:
             session.commit()
             session.flush()
         except Exception as ex:
+            print(ex)
             session.rollback()
             session.close()
         finally:
@@ -46,6 +47,7 @@ class Database:
             session.commit()
             session.flush()
         except Exception as ex:
+            print(ex)
             session.rollback()
             session.close()
             pass

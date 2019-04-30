@@ -1,3 +1,4 @@
+import datetime
 import sys
 from io import StringIO
 import requests
@@ -5,24 +6,36 @@ import pandas as pd
 import os.path
 from os import path
 
+from database import Database
+from model import TblHistory
 
-def get_namad_history_by_id(id,start_date = None):
-    d = requests.request("GET", "http://cdn.tsetmc.com/tsev2/data/InstTradeHistory.aspx?i={}&Top=999999&A=1".format(id),
-                         timeout=40)
-    d = StringIO(d.text.replace(";", "\n"))
+
+def get_namad_history_by_id(id, start_date=None):
+    t = _get_namad_history_row_data(id)
+    d = StringIO(t)
     df = pd.read_csv(d, sep="@")
     df.columns = ["Date", "PriceMax", "PriceMin", "ClosePrice", "LastPrice", "PriceFirst", "PriceYesterday", "Value",
                   "VolumeTrade", "NumberTrade"]
     df["GDATE"] = pd.DatetimeIndex(pd.to_datetime(df["Date"], format="%Y%m%d"))
     return df
 
-def get_namad_history_by_name(namad,start_date = None):
+
+def _get_namad_history_row_data(id):
+    d = requests.request("GET", "http://cdn.tsetmc.com/tsev2/data/InstTradeHistory.aspx?i={}&Top=999999&A=1".format(id),
+                         timeout=40)
+    t = d.text.replace(";", "\n")
+    return t
+
+
+def get_namad_history_by_name(namad, start_date=None):
     id = _get_namad_id_by_name(namad)
-    return get_namad_history_by_id(id,start_date)
+    return get_namad_history_by_id(id, start_date)
+
 
 def _get_namad_id_by_name(name):
     id = get_namad_list(sync=False)[["ID", "NAMAD"]].set_index("NAMAD").loc[name]["ID"]
     return id
+
 
 def get_namad_list(sync=False):
     exist = path.exists("./Namads.csv")
@@ -32,6 +45,7 @@ def get_namad_list(sync=False):
         return df
     else:
         return pd.read_csv("./Namads.csv")
+
 
 def _request_namad():
     r = requests.request("GET", "http://cdn.tsetmc.com/tsev2/data/MarketWatchInit.aspx?h=0&r=0", timeout=400,
@@ -49,6 +63,25 @@ def _request_namad():
     return df
 
 
+def update_namads():
+    db = Database()
+    lst = get_namad_list(True)
+    count = len(lst.values)
+    couter = 0
+    for n in lst.values:
+        try:
+            couter +=1
+            id = n[0]
+            name = n[2]
+            history = _get_namad_history_row_data(id)
+            last_update = datetime.datetime.now()
+
+            h = TblHistory(namad_name=name, namad_id=id, history=history, last_update=last_update)
+            db.insert_or_update(h)
+            print("namad:{} > {} of {}".format(name , couter, count))
+        except Exception as ex:
+            print(n)
+
 
 if __name__ == "__main__":
- pass
+    update_namads()
