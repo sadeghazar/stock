@@ -42,13 +42,15 @@ def _get_namad_history_row_data_online(id):
 
 def _get_namad_history_row_data_offline(id):
     db = Database()
-    h = db.get_history(id).history
+    h = db.get_history(id)
+    if h:
+        return h.history
     return h
 
 
-def get_namad_history_by_name(namad, start_date=None):
-    id = _get_namad_id_by_name(namad)
-    return get_namad_history_by_id(id, start_date)
+def get_namad_history_by_name(namad, start_date=None, from_cache=False):
+    id = int(_get_namad_id_by_name(namad))
+    return get_namad_history_by_id(id, start_date, from_cache)
 
 
 def _get_namad_id_by_name(name):
@@ -107,5 +109,6 @@ def update_namads():
 
 
 if __name__ == "__main__":
+    d = get_namad_history_by_name('جكانه806', start_date='1390-1-1', from_cache=True)["ClosePrice"]
     # update_namads()
-    d = get_namad_history_by_id(46982154647719707, from_cache=True, start_date='1390-1-1')
+    # d = get_namad_history_by_id(46982154647719707, from_cache=True, start_date='1390-1-1')
