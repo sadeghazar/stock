@@ -10,21 +10,38 @@ from database import Database
 from model import TblHistory
 
 
-def get_namad_history_by_id(id, start_date=None):
-    t = _get_namad_history_row_data(id)
+def get_namad_history_by_id(id, start_date=None, from_cache=False):
+    t = ""
+    if from_cache:
+        t = _get_namad_history_row_data_offline(id)
+    else:
+        t = _get_namad_history_row_data_online(id)
     d = StringIO(t)
     df = pd.read_csv(d, sep="@")
     df.columns = ["Date", "PriceMax", "PriceMin", "ClosePrice", "LastPrice", "PriceFirst", "PriceYesterday", "Value",
                   "VolumeTrade", "NumberTrade"]
     df["GDATE"] = pd.DatetimeIndex(pd.to_datetime(df["Date"], format="%Y%m%d"))
+    if start_date:
+        try:
+            datetime_object = datetime.datetime.strptime(start_date, '%Y-%m-%d')
+            mask = (df["GDATE"] >= datetime_object)
+            df = df.loc[mask]
+        except Exception as ex:
+            print(ex)
     return df
 
 
-def _get_namad_history_row_data(id):
+def _get_namad_history_row_data_online(id):
     d = requests.request("GET", "http://cdn.tsetmc.com/tsev2/data/InstTradeHistory.aspx?i={}&Top=999999&A=1".format(id),
                          timeout=40)
     t = d.text.replace(";", "\n")
     return t
+
+
+def _get_namad_history_row_data_offline(id):
+    db = Database()
+    h = db.get_history(id).history
+    return h
 
 
 def get_namad_history_by_name(namad, start_date=None):
@@ -70,14 +87,14 @@ def update_namads():
     couter = 0
     for n in lst.values:
         try:
-            couter +=1
+            couter += 1
             id = n[0]
             name = n[2]
-            history = _get_namad_history_row_data(id)
+            history = _get_namad_history_row_data_online(id)
             last_update = datetime.datetime.now()
 
             h = TblHistory(namad_name=name, namad_id=id,
-                           history=history, last_update=last_update,category=n[8])
+                           history=history, last_update=last_update, category=n[8])
             db.insert_or_update(h)
             print("-" * 100)
             print("{} of {}".format(couter, count))
@@ -88,4 +105,5 @@ def update_namads():
 
 
 if __name__ == "__main__":
-    update_namads()
+    # update_namads()
+    d = get_namad_history_by_id(46982154647719707, from_cache=True,start_date='2010-1-1')

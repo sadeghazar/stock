@@ -2,6 +2,8 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import Session
 
+from model import TblHistory
+
 
 class Database:
     engine = None
@@ -84,3 +86,14 @@ class Database:
         finally:
             connection.close()
         return results
+
+    def get_history(self,id):
+        session = Session(bind=self.engine)
+        results = None
+        try:
+            results = session.query(TblHistory).filter(TblHistory.namad_id == id).first()
+            return results
+        except Exception as ex:
+            print(ex)
+        finally:
+            return results

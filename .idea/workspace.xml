@@ -5,6 +5,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Namads.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Namads.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/StockHistory.py" beforeDir="false" afterPath="$PROJECT_DIR$/StockHistory.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database.py" beforeDir="false" afterPath="$PROJECT_DIR$/database.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dbase" beforeDir="false" afterPath="$PROJECT_DIR$/dbase" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -55,34 +56,50 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/StockHistory.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="169">
-              <caret line="81" column="51" selection-start-line="81" selection-start-column="51" selection-end-line="81" selection-end-column="51" />
+            <state relative-caret-position="370">
+              <caret line="27" column="29" selection-start-line="27" selection-start-column="29" selection-end-line="27" selection-end-column="29" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
+                <element signature="e#630#830#0" />
+                <element signature="e#969#1031#0" />
                 <element signature="e#715#798#0" />
                 <element signature="e#837#934#0" />
                 <element signature="e#972#1176#0" />
                 <element signature="e#1205#1955#0" />
+                <element signature="e#2057#2494#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/run.py">
+        <entry file="file://$PROJECT_DIR$/model.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="154">
-              <caret line="7" column="14" selection-start-line="4" selection-start-column="4" selection-end-line="7" selection-end-column="14" />
+              <caret line="7" column="16" selection-start-line="7" selection-start-column="6" selection-end-line="7" selection-end-column="16" />
               <folding>
-                <element signature="e#0#19#0" expanded="true" />
+                <element signature="e#0#67#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/run.ipynb">
-          <provider selected="true" editor-type-id="jupyter-editor" />
+        <entry file="file://$PROJECT_DIR$/database.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="548">
+              <caret line="89" column="19" selection-start-line="89" selection-start-column="8" selection-end-line="89" selection-end-column="19" />
+              <folding>
+                <element signature="e#0#36#0" expanded="true" />
+                <element signature="e#321#646#0" />
+                <element signature="e#688#858#0" />
+                <element signature="e#900#1037#0" />
+                <element signature="e#1085#1430#0" />
+                <element signature="e#1495#1847#0" />
+                <element signature="e#1905#2381#0" />
+              </folding>
+            </state>
+          </provider>
         </entry>
       </file>
     </leaf>
@@ -140,7 +157,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="database.console.LAST_STATE" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Crawling/data_saver" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Crawling/crawler" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
@@ -245,7 +262,7 @@
       <workItem from="1555345144799" duration="5935000" />
       <workItem from="1555407152519" duration="6250000" />
       <workItem from="1556554678979" duration="1231000" />
-      <workItem from="1556605596868" duration="4631000" />
+      <workItem from="1556605596868" duration="10101000" />
     </task>
     <task id="LOCAL-00001" summary="sec">
       <created>1556608537181</created>
@@ -261,11 +278,25 @@
       <option name="project" value="LOCAL" />
       <updated>1556610146573</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="sec">
+      <created>1556610253753</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1556610253753</updated>
+    </task>
+    <task id="LOCAL-00004" summary="sec">
+      <created>1556618961243</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1556618961243</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="18047000" />
+    <option name="totallyTimeSpent" value="23517000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="1080" width="1920" height="1036" extended-state="6" />
@@ -276,9 +307,9 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Database Console" weight="0.38876653" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.45044053" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4185022" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32929516" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.45044053" />
+      <window_info anchor="bottom" id="Debug" order="3" visible="true" weight="0.4185022" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -292,9 +323,9 @@
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="SciView" order="3" sideWeight="0.92740047" weight="0.30522946" />
+      <window_info active="true" anchor="right" id="SciView" order="3" sideWeight="0.92740047" visible="true" weight="0.20010673" />
       <window_info anchor="right" x="0" y="0" width="274" height="543" id="Documentation" order="4" sideWeight="0.07259953" side_tool="true" weight="0.4102155" />
-      <window_info anchor="right" id="Database" order="5" visible="true" weight="0.1755603" />
+      <window_info anchor="right" id="Database" order="5" weight="0.1755603" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -305,6 +336,20 @@
     <option name="LAST_COMMIT_MESSAGE" value="sec" />
   </component>
   <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/StockHistory.py</url>
+          <line>29</line>
+          <option name="timeStamp" value="20" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/StockHistory.py</url>
+          <line>30</line>
+          <option name="timeStamp" value="21" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
     <watches-manager>
       <configuration name="PythonConfigurationType">
         <watch expression="df" />
@@ -315,7 +360,7 @@
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/StockAnalytics$run.coverage" NAME="run Coverage Results" MODIFIED="1555410504513" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/StockAnalytics$StockHistory.coverage" NAME="StockHistory Coverage Results" MODIFIED="1556554709769" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/sanalitics$StockHistory.coverage" NAME="StockHistory Coverage Results" MODIFIED="1556610229441" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/sanalitics$StockHistory.coverage" NAME="StockHistory Coverage Results" MODIFIED="1556621032333" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/venv/lib/python3.6/site-packages/pandas/core/internals/managers.py">
@@ -332,9 +377,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/run.ipynb">
-      <provider selected="true" editor-type-id="jupyter-editor" />
-    </entry>
     <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/49400601-f8fe-40d9-9345-6e13497ee270/console.sql">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -342,6 +384,28 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="88">
           <caret line="4" selection-start-line="4" selection-end-line="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://49400601-f8fe-40d9-9345-6e13497ee270/schema/main/table/tbl_history">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true">
+            <filter text="" />
+          </filtering>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/run.ipynb">
+      <provider selected="true" editor-type-id="jupyter-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/run.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -358,29 +422,10 @@
         <state relative-caret-position="-1200" />
       </provider>
     </entry>
-    <entry file="das://49400601-f8fe-40d9-9345-6e13497ee270/schema/main/table/tbl_history">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true">
-            <filter text="" />
-          </filtering>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/run.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="7" column="14" selection-start-line="4" selection-start-column="4" selection-end-line="7" selection-end-column="14" />
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/model.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
-          <caret line="12" column="59" selection-start-line="12" selection-start-column="59" selection-end-line="12" selection-end-column="59" />
+        <state relative-caret-position="154">
+          <caret line="7" column="16" selection-start-line="7" selection-start-column="6" selection-end-line="7" selection-end-column="16" />
           <folding>
             <element signature="e#0#67#0" expanded="true" />
           </folding>
@@ -389,24 +434,33 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/database.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="282">
-          <caret line="19" column="21" selection-start-line="19" selection-start-column="21" selection-end-line="19" selection-end-column="21" />
+        <state relative-caret-position="548">
+          <caret line="89" column="19" selection-start-line="89" selection-start-column="8" selection-end-line="89" selection-end-column="19" />
           <folding>
             <element signature="e#0#36#0" expanded="true" />
+            <element signature="e#321#646#0" />
+            <element signature="e#688#858#0" />
+            <element signature="e#900#1037#0" />
+            <element signature="e#1085#1430#0" />
+            <element signature="e#1495#1847#0" />
+            <element signature="e#1905#2381#0" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/StockHistory.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="169">
-          <caret line="81" column="51" selection-start-line="81" selection-start-column="51" selection-end-line="81" selection-end-column="51" />
+        <state relative-caret-position="370">
+          <caret line="27" column="29" selection-start-line="27" selection-start-column="29" selection-end-line="27" selection-end-column="29" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
+            <element signature="e#630#830#0" />
+            <element signature="e#969#1031#0" />
             <element signature="e#715#798#0" />
             <element signature="e#837#934#0" />
             <element signature="e#972#1176#0" />
             <element signature="e#1205#1955#0" />
+            <element signature="e#2057#2494#0" />
           </folding>
         </state>
       </provider>
