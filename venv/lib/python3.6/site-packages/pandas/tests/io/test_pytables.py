@@ -34,15 +34,6 @@ from pandas.io.pytables import TableIterator  # noqa:E402
 tables = pytest.importorskip('tables')
 
 
-# TODO:
-# remove when gh-24839 is fixed; this affects numpy 1.16
-# and pytables 3.4.4
-xfail_non_writeable = pytest.mark.xfail(
-    LooseVersion(np.__version__) >= LooseVersion('1.16'),
-    reason=('gh-25511, gh-24839. pytables needs a '
-            'release beyong 3.4.4 to support numpy 1.16x'))
-
-
 _default_compressor = ('blosc' if LooseVersion(tables.__version__) >=
                        LooseVersion('2.2') else 'zlib')
 
@@ -884,7 +875,6 @@ class TestHDFStore(Base):
         df = DataFrame(np.random.randn(50, 100))
         self._check_roundtrip(df, tm.assert_frame_equal)
 
-    @xfail_non_writeable
     def test_put_mixed_type(self):
         df = tm.makeTimeDataFrame()
         df['obj1'] = 'foo'
@@ -1521,10 +1511,7 @@ class TestHDFStore(Base):
             tm.assert_series_equal(pd.read_hdf(path, 'ss4'),
                                    pd.concat([df['B'], df2['B']]))
 
-    @pytest.mark.parametrize(
-        "format",
-        [pytest.param('fixed', marks=xfail_non_writeable),
-         'table'])
+    @pytest.mark.parametrize("format", ['fixed', 'table'])
     def test_to_hdf_errors(self, format):
 
         data = ['\ud800foo']
@@ -1971,7 +1958,6 @@ class TestHDFStore(Base):
             pytest.raises(TypeError, store.select,
                           'df', where=[('columns=A')])
 
-    @xfail_non_writeable
     def test_append_misc(self):
 
         with ensure_clean_store(self.path) as store:
@@ -2203,7 +2189,6 @@ class TestHDFStore(Base):
             # this fails because we have a date in the object block......
             pytest.raises(TypeError, store.append, 'df_unimplemented', df)
 
-    @xfail_non_writeable
     @pytest.mark.skipif(
         LooseVersion(np.__version__) == LooseVersion('1.15.0'),
         reason=("Skipping  pytables test when numpy version is "
@@ -2762,7 +2747,6 @@ class TestHDFStore(Base):
         s = Series(np.random.randn(10), index=index)
         self._check_roundtrip(s, tm.assert_series_equal)
 
-    @xfail_non_writeable
     def test_tuple_index(self):
 
         # GH #492
@@ -2775,7 +2759,6 @@ class TestHDFStore(Base):
             simplefilter("ignore", pd.errors.PerformanceWarning)
             self._check_roundtrip(DF, tm.assert_frame_equal)
 
-    @xfail_non_writeable
     @pytest.mark.filterwarnings("ignore::pandas.errors.PerformanceWarning")
     def test_index_types(self):
 
@@ -2839,7 +2822,6 @@ class TestHDFStore(Base):
         except OverflowError:
             pytest.skip('known failer on some windows platforms')
 
-    @xfail_non_writeable
     @pytest.mark.parametrize("compression", [
         False, pytest.param(True, marks=td.skip_if_windows_python_3)
     ])
@@ -2870,7 +2852,6 @@ class TestHDFStore(Base):
         # empty
         self._check_roundtrip(df[:0], tm.assert_frame_equal)
 
-    @xfail_non_writeable
     def test_empty_series_frame(self):
         s0 = Series()
         s1 = Series(name='myseries')
@@ -2884,10 +2865,8 @@ class TestHDFStore(Base):
         self._check_roundtrip(df1, tm.assert_frame_equal)
         self._check_roundtrip(df2, tm.assert_frame_equal)
 
-    @xfail_non_writeable
-    @pytest.mark.parametrize(
-        'dtype', [np.int64, np.float64, np.object, 'm8[ns]', 'M8[ns]'])
-    def test_empty_series(self, dtype):
+    def test_empty_series(self):
+        for dtype in [np.int64, np.float64, np.object, 'm8[ns]', 'M8[ns]']:
             s = Series(dtype=dtype)
             self._check_roundtrip(s, tm.assert_series_equal)
 
@@ -2968,7 +2947,6 @@ class TestHDFStore(Base):
             recons = store['series']
             tm.assert_series_equal(recons, series)
 
-    @xfail_non_writeable
     @pytest.mark.parametrize("compression", [
         False, pytest.param(True, marks=td.skip_if_windows_python_3)
     ])
@@ -4560,10 +4538,9 @@ class TestHDFStore(Base):
             d1 = store['detector']
             assert isinstance(d1, DataFrame)
 
-    @xfail_non_writeable
     def test_legacy_table_fixed_format_read_py2(self, datapath):
         # GH 24510
-        # legacy table with fixed format written in Python 2
+        # legacy table with fixed format written en Python 2
         with ensure_clean_store(
                 datapath('io', 'data', 'legacy_hdf',
                          'legacy_table_fixed_py2.h5'),
@@ -4574,21 +4551,6 @@ class TestHDFStore(Base):
                                     index=pd.Index(['ABC'],
                                                    name='INDEX_NAME'))
             assert_frame_equal(expected, result)
-
-    def test_legacy_table_read_py2(self, datapath):
-        # issue: 24925
-        # legacy table written in Python 2
-        with ensure_clean_store(
-                datapath('io', 'data', 'legacy_hdf',
-                         'legacy_table_py2.h5'),
-                mode='r') as store:
-            result = store.select('table')
-
-        expected = pd.DataFrame({
-            "a": ["a", "b"],
-            "b": [2, 3]
-        })
-        assert_frame_equal(expected, result)
 
     def test_legacy_table_read(self, datapath):
         # legacy table types
@@ -4748,7 +4710,6 @@ class TestHDFStore(Base):
             result = store.get('df')
             tm.assert_frame_equal(result, df)
 
-    @xfail_non_writeable
     def test_store_datetime_mixed(self):
 
         df = DataFrame(
@@ -5309,7 +5270,6 @@ class TestHDFComplexValues(Base):
             reread = read_hdf(path, 'df')
             assert_frame_equal(df, reread)
 
-    @xfail_non_writeable
     def test_complex_mixed_fixed(self):
         complex64 = np.array([1.0 + 1.0j, 1.0 + 1.0j,
                               1.0 + 1.0j, 1.0 + 1.0j], dtype=np.complex64)

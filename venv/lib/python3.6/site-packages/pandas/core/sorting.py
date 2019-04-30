@@ -1,5 +1,4 @@
 """ miscellaneous sorting / groupby utilities """
-import warnings
 
 import numpy as np
 
@@ -255,13 +254,7 @@ def nargsort(items, kind='quicksort', ascending=True, na_position='last'):
             sorted_idx = np.roll(sorted_idx, cnt_null)
         return sorted_idx
 
-    with warnings.catch_warnings():
-        # https://github.com/pandas-dev/pandas/issues/25439
-        # can be removed once ExtensionArrays are properly handled by nargsort
-        warnings.filterwarnings(
-            "ignore", category=FutureWarning,
-            message="Converting timezone-aware DatetimeArray to")
-        items = np.asanyarray(items)
+    items = np.asanyarray(items)
     idx = np.arange(len(items))
     mask = isna(items)
     non_nans = items[~mask]

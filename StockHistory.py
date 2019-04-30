@@ -33,7 +33,6 @@ def get_namad_list(sync=False):
     else:
         return pd.read_csv("./Namads.csv")
 
-
 def _request_namad():
     r = requests.request("GET", "http://cdn.tsetmc.com/tsev2/data/MarketWatchInit.aspx?h=0&r=0", timeout=400,
                          stream=True)
@@ -48,6 +47,7 @@ def _request_namad():
         columns=["firstprice", "lastprice", "akharinmoamele", "count", "arzesh", "minprice", "maxprice",
                  "yesterday", "eps", "tedadekharid", "max2", "min2"])
     return df
+
 
 
 if __name__ == "__main__":

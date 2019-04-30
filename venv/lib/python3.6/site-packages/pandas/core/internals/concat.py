@@ -190,8 +190,6 @@ class JoinUnit(object):
                     pass
                 elif getattr(self.block, 'is_sparse', False):
                     pass
-                elif getattr(self.block, 'is_extension', False):
-                    pass
                 else:
                     missing_arr = np.empty(self.shape, dtype=empty_dtype)
                     missing_arr.fill(fill_value)

@@ -102,18 +102,6 @@ def test_resample_basic(series, closed, expected):
     assert_series_equal(result, expected)
 
 
-def test_resample_integerarray():
-    # GH 25580, resample on IntegerArray
-    ts = pd.Series(range(9),
-                   index=pd.date_range('1/1/2000', periods=9, freq='T'),
-                   dtype='Int64')
-    result = ts.resample('3T').sum()
-    expected = Series([3, 12, 21],
-                      index=pd.date_range('1/1/2000', periods=3, freq='3T'),
-                      dtype="Int64")
-    assert_series_equal(result, expected)
-
-
 def test_resample_basic_grouper(series):
     s = series
     result = s.resample('5Min').last()
@@ -1221,13 +1209,9 @@ def test_resample_nunique_with_date_gap():
 @pytest.mark.parametrize('k', [10, 100, 1000])
 def test_resample_group_info(n, k):
     # GH10914
-
-    # use a fixed seed to always have the same uniques
-    prng = np.random.RandomState(1234)
-
     dr = date_range(start='2015-08-27', periods=n // 10, freq='T')
-    ts = Series(prng.randint(0, n // k, n).astype('int64'),
-                index=prng.choice(dr, n))
+    ts = Series(np.random.randint(0, n // k, n).astype('int64'),
+                index=np.random.choice(dr, n))
 
     left = ts.resample('30T').nunique()
     ix = date_range(start=ts.index.min(), end=ts.index.max(),

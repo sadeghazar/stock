@@ -4661,7 +4661,7 @@ class DataFrame(NDFrame):
         from pandas._libs.hashtable import duplicated_int64, _SIZE_HINT_LIMIT
 
         if self.empty:
-            return Series(dtype=bool)
+            return Series()
 
         def f(vals):
             labels, shape = algorithms.factorize(
@@ -7455,8 +7455,7 @@ class DataFrame(NDFrame):
                 if filter_type is None or filter_type == 'numeric':
                     data = self._get_numeric_data()
                 elif filter_type == 'bool':
-                    # GH 25101, # GH 24434
-                    data = self._get_bool_data() if axis == 0 else self
+                    data = self
                 else:  # pragma: no cover
                     msg = ("Generating numeric_only data with filter_type {f}"
                            "not supported.".format(f=filter_type))

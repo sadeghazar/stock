@@ -3610,12 +3610,8 @@ class Series(base.IndexOpsMixin, generic.NDFrame):
         if axis is not None:
             self._get_axis_number(axis)
 
-        if isinstance(delegate, Categorical):
-            # TODO deprecate numeric_only argument for Categorical and use
-            # skipna as well, see GH25303
-            return delegate._reduce(name, numeric_only=numeric_only, **kwds)
-        elif isinstance(delegate, ExtensionArray):
-            # dispatch to ExtensionArray interface
+        # dispatch to ExtensionArray interface
+        if isinstance(delegate, ExtensionArray):
             return delegate._reduce(name, skipna=skipna, **kwds)
         elif is_datetime64_dtype(delegate):
             # use DatetimeIndex implementation to handle skipna correctly

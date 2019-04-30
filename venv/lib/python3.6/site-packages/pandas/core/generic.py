@@ -1331,6 +1331,7 @@ class NDFrame(PandasObject, SelectionMixin):
                cat        4
                monkey     2
         """
+        pd.MultiIndex.from_product([["mammal"], ['dog', 'cat', 'monkey']])
         axis = self._get_axis_number(axis)
         idx = self._get_axis(axis).set_names(name)
 
@@ -2895,8 +2896,7 @@ class NDFrame(PandasObject, SelectionMixin):
         ----------
         path_or_buf : str or file handle, default None
             File path or object, if None is provided the result is returned as
-            a string.  If a file object is passed it should be opened with
-            `newline=''`, disabling universal newlines.
+            a string.
 
             .. versionchanged:: 0.24.0
 

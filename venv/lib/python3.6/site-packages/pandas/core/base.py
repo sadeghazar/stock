@@ -761,7 +761,7 @@ class IndexOpsMixin(object):
         """
         Return the number of elements in the underlying data.
         """
-        return len(self._values)
+        return self._values.size
 
     @property
     def flags(self):
@@ -1345,7 +1345,7 @@ class IndexOpsMixin(object):
         -------
         is_unique : boolean
         """
-        return self.nunique(dropna=False) == len(self)
+        return self.nunique() == len(self)
 
     @property
     def is_monotonic(self):
