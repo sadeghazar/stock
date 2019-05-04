@@ -11,7 +11,7 @@ from model import TblHistory
 import jdatetime
 
 
-def get_namad_history_by_id(id, start_date=None, from_cache=False):
+def get_namad_history_by_id(id, start_date=None, end_date=None, from_cache=False):
     t = ""
     if from_cache:
         t = _get_namad_history_row_data_offline(id)
@@ -22,12 +22,19 @@ def get_namad_history_by_id(id, start_date=None, from_cache=False):
     df.columns = ["Date", "PriceMax", "PriceMin", "ClosePrice", "LastPrice", "PriceFirst", "PriceYesterday", "Value",
                   "VolumeTrade", "NumberTrade"]
     df["GDATE"] = pd.DatetimeIndex(pd.to_datetime(df["Date"], format="%Y%m%d"))
+    df.set_index("GDATE", inplace=True)
+    df.sort_index(ascending=True, inplace=True)
     if start_date:
         try:
-            datetime_object = jdatetime.datetime.strptime(start_date, '%Y-%m-%d').togregorian()
-            # datetime_object = datetime.datetime.strptime(start_date, '%Y-%m-%d')
-            mask = (df["GDATE"] >= datetime_object)
-            df = df.loc[mask]
+
+            start_date = jdatetime.datetime.strptime(start_date, '%Y-%m-%d').togregorian()
+
+            if end_date:
+                end_date = jdatetime.datetime.strptime(end_date, '%Y-%m-%d').togregorian()
+            else:
+                end_date = datetime.datetime.now()
+
+            df = df.loc[start_date:end_date]
         except Exception as ex:
             print(ex)
     return df
@@ -48,9 +55,37 @@ def _get_namad_history_row_data_offline(id):
     return h
 
 
-def get_namad_history_by_name(namad, start_date=None, from_cache=False):
-    id = int(_get_namad_id_by_name(namad))
-    return get_namad_history_by_id(id, start_date, from_cache)
+def get_market_index(start_date=None, end_date=None):
+    d = requests.request("GET", "http://www.tsetmc.com/tsev2/chart/data/Index.aspx?i=32097828799138957&t=value",
+                         timeout=40, stream=True)
+    t = d.text.replace(";", "\n")
+    d = StringIO(t)
+    df = pd.read_csv(d, sep=",")
+    df.columns = ["Date", "Value"]
+    df["GDate"] = df["Date"].apply(lambda date: jdatetime.datetime.strptime(date, '%Y/%m/%d').togregorian())
+    df.set_index("GDate", inplace=True)
+    df.sort_index(ascending=True, inplace=True)
+    if start_date:
+        try:
+            start_date = jdatetime.datetime.strptime(start_date, '%Y-%m-%d').togregorian()
+
+            if end_date:
+                end_date = jdatetime.datetime.strptime(end_date, '%Y-%m-%d').togregorian()
+            else:
+                end_date = datetime.datetime.now()
+
+            df = df.loc[start_date:end_date]
+        except Exception as ex:
+            print(ex)
+    return df
+
+
+def get_namad_history_by_name(namad, start_date=None, end_date=None, from_cache=False):
+    if namad == "index":
+        return get_market_index(start_date=None, end_date=None)
+    else:
+        id = int(_get_namad_id_by_name(namad))
+        return get_namad_history_by_id(id, start_date, end_date, from_cache)
 
 
 def _get_namad_id_by_name(name):
@@ -69,6 +104,15 @@ def get_namad_list(sync=False):
 
 
 def _request_namad():
+    r = requests.request("GET", "http://www.fipiran.com/IndexDetails/IndexInstrument?Lval30=32097828799138957",
+                         timeout=400, stream=True)
+    t = r.text.replace(";", "\n")
+    d = StringIO(t)
+    df1 = pd.read_html(d)[0]
+    df1.columns = ["NAMAD", "last_price", "changes_last_price", "end_price", "changes_end_price", "count", "volume",
+                  "value"]
+    df1.drop(inplace=True,columns=["last_price", "changes_last_price", "end_price", "changes_end_price", "count", "volume","value"])
+    df1.set_index("NAMAD",inplace=True)
     r = requests.request("GET", "http://cdn.tsetmc.com/tsev2/data/MarketWatchInit.aspx?h=0&r=0", timeout=400,
                          stream=True)
     text = r.text.split("@")[2]
@@ -81,6 +125,12 @@ def _request_namad():
     df = df.drop(
         columns=["firstprice", "lastprice", "akharinmoamele", "count", "arzesh", "minprice", "maxprice",
                  "yesterday", "eps", "tedadekharid", "max2", "min2"])
+    df.set_index("NAMAD",inplace=True)
+
+
+    df = df1.join(df)
+    df = df[df.ID.notnull()]
+    # df = df.dropna()
     return df
 
 
@@ -109,7 +159,12 @@ def update_namads():
 
 
 if __name__ == "__main__":
-    d = get_namad_history_by_name('جكانه806', start_date='1390-1-1', from_cache=True)["ClosePrice"]
-    pass
-    # update_namads()
-    # d = get_namad_history_by_id(46982154647719707, from_cache=True, start_date='1390-1-1')
+    df = _request_namad()
+    print(df)
+    # mindex = get_market_index('1390-1-1', '1398-8-1')
+    # pass
+    # print(mindex)
+    # # d = get_namad_history_by_name('جكانه806', start_date='1390-1-1', from_cache=True)
+    # # pass
+    # # update_namads()
+    # # d = get_namad_history_by_id(46982154647719707, from_cache=True, start_date='1390-1-1')

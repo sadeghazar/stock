@@ -5,3 +5,4 @@ SQLAlchemy
 sqlacodegen
 jdatetime
 seaborn
+pandas_datareader
