@@ -6,3 +6,5 @@ sqlacodegen
 jdatetime
 seaborn
 pandas_datareader
+statsmodels
+sklearn

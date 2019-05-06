@@ -42,7 +42,7 @@ def get_price_history(start_date=None, end_date=None, from_cache=False):
 
 
 def _get_gold_history_row_data_online():
-    d = requests.request("GET", "http://www.tgju.org/chart-summary-ajax/mesghal?_=1557129058699", timeout=40)
+    d = requests.request("GET", "http://www.tgju.org/chart-summary-ajax/mesghal", timeout=40)
     t = d.text
     return t
 
